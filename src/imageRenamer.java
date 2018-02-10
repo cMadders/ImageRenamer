@@ -63,10 +63,10 @@ public class imageRenamer extends JFrame
    
 	private backgroundJButton begin;
 	private backgroundJButton importBut;
-   private backgroundJButton editButton;
-   private backgroundJButton scriptToTextButton;
+   	private backgroundJButton editButton;
+   	private backgroundJButton scriptToTextButton;
 	
-   private ArrayList<String> companies;
+   	private ArrayList<String> companies;
 	
 	private scriptChecker scriptCheck;
 	
@@ -81,16 +81,16 @@ public class imageRenamer extends JFrame
 	
 	
 	private BackgroundMenuBar menuBar;
-   private JMenu historyMenu;
+   	private JMenu historyMenu;
 	private JMenu fileMenu;
-   private JMenu settingsMenu;
-   private JMenuItem filePathMenu;
-   private JMenuItem updateImport;
+   	private JMenu settingsMenu;
+   	private JMenuItem filePathMenu;
+   	private JMenuItem updateImport;
 	private JMenuItem createDataFile;
-   private JMenuItem compileFiles;
-   private JMenuItem createCaptions;
+   	private JMenuItem compileFiles;
+   	private JMenuItem createCaptions;
 	private JMenuItem exitItem;
-   private ArrayList<JMenuItem> historyList;
+   	private ArrayList<JMenuItem> historyList;
 	
 	private Date currentDate;
 	
@@ -99,146 +99,144 @@ public class imageRenamer extends JFrame
 	
 	private JFileChooser fc;
    
-   private scriptObject importedScript;
-   private ArrayList<scriptObject> importedScriptArray;
+   	private scriptObject importedScript;
+   	private ArrayList<scriptObject> importedScriptArray;
 	
 	private Font JButtonFont = new Font("sansserif",Font.BOLD,12);
 	private Color dmcGray = new Color(75,75,75);
 	private Color dmcLightGray = new Color(150,150,150);
 	private Color dmcRed = new Color(175,50,50);
-   private Color dmcBlue = new Color(150,185,205);
+   	private Color dmcBlue = new Color(150,185,205);
 	
 	private String defaultImportPath = "Z:\\00 SCRIPTS TO BE READ\\";
 	private String defaultExportDFPath ="Z:\\00 CC STRING FILES\\";
 	private String defaultExportGFXPath = "Z:\\00 CC GRAPHICS\\";
 	private String defaultLogosPath = "Z:\\0 Logos\\";
 	private String backUpPath = "Z:\\00 BACKUPS\\";
-   private String defaultSubLogoFolder = "web";
-   private String configureFolder = ".\\configure";
-   private String configurePathFile = ".\\configure\\filePaths.txt";
-   private String configureTLDS = ".\\configure\\tlds.txt";
-   private String defaultSlateTextFilePath = "Z:\\00 CC TEXT\\";
-   private String compilationDirectory = "";
-   private ArrayList<String> marketLogoPaths = new ArrayList<String>(); 
+	private String defaultSubLogoFolder = "web";
+	private String configureFolder = ".\\configure";
+	private String configurePathFile = ".\\configure\\filePaths.txt";
+	private String configureTLDS = ".\\configure\\tlds.txt";
+	private String defaultSlateTextFilePath = "Z:\\00 CC TEXT\\";
+	private String compilationDirectory = "";
+	private ArrayList<String> marketLogoPaths = new ArrayList<String>(); 
 
 	public imageRenamer()
 	{
-      // Make sure the current version is valid (references ftp site)
-      
-		try {
-	    for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-	        if ("Nimbus".equals(info.getName())) {
-	            UIManager.setLookAndFeel(info.getClassName());
-	            break;
-	        }
-	    }
+	 	try {
+		  for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+			if ("Nimbus".equals(info.getName())) {
+				UIManager.setLookAndFeel(info.getClassName());
+				break;
+			}
+		  }
 		} catch (Exception e) {
-		   
+
 		}
-      WindowAdapter windowAdapter = new WindowAdapter()
-      {
-         public void windowClosing(WindowEvent we)
-         {
-            setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-         }
-      };
-      addWindowListener(windowAdapter);
+		WindowAdapter windowAdapter = new WindowAdapter()
+		{
+		   public void windowClosing(WindowEvent we)
+		   {
+		      setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		   }
+		};
+		addWindowListener(windowAdapter);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-      importedScriptArray = new ArrayList<scriptObject>();
-      
+
+		importedScriptArray = new ArrayList<scriptObject>();
+
 		// The basic frame construction settings
 		setTitle("DMC Image Renamer");
 		Toolkit toolkit =  Toolkit.getDefaultToolkit ();
- 		Dimension dim = toolkit.getScreenSize();
+		Dimension dim = toolkit.getScreenSize();
 		WIDTH = dim.width / 2;
 		HEIGHT = dim.height / 2;
 		setBounds(0, 0,WIDTH,HEIGHT);
-		
+
 		// Create the Scroll list for all the selectable markets (filled in teh createMarketsLists() method)
 		marketsListsModel = new DefaultListModel();
-		
+
 		begin = new backgroundJButton("Rename Images");
 		importBut = new backgroundJButton("Import Script");
 		importBut.setBackground(dmcRed);
 		begin.setBackground(dmcRed);
-      //**********************************************************Menu Bar Settings
+		//**********************************************************Menu Bar Settings
 		menuBar = new BackgroundMenuBar();
-      fileMenu = new JMenu("File");
+		fileMenu = new JMenu("File");
 		fileMenu.setMnemonic(KeyEvent.VK_F);
 		menuBar.add(fileMenu);
-      
-      historyMenu = new JMenu("History");
-      menuBar.add(historyMenu);
-      
-      // Create the Datafile menu items
+
+		historyMenu = new JMenu("History");
+		menuBar.add(historyMenu);
+
+		// Create the Datafile menu items
 		createDataFile = new JMenuItem("Create Datafile");
 		createDataFile.setMnemonic(KeyEvent.VK_C);
 		createDataFile.addActionListener(new createDFListener());
-      
-      // Create Compile Menu Items
-      compileFiles = new JMenuItem("Compile Folder");
-      compileFiles.setMnemonic(KeyEvent.VK_H);
-      compileFiles.addActionListener(new compileListener());
-      
-      // Create voice over menu item
-      createCaptions = new JMenuItem("Create Captions");
-      createCaptions.setMnemonic(KeyEvent.VK_V);
-      createCaptions.addActionListener(new createVOListener());
-      
-      // create the exit menu items
+
+		// Create Compile Menu Items
+		compileFiles = new JMenuItem("Compile Folder");
+		compileFiles.setMnemonic(KeyEvent.VK_H);
+		compileFiles.addActionListener(new compileListener());
+
+		// Create voice over menu item
+		createCaptions = new JMenuItem("Create Captions");
+		createCaptions.setMnemonic(KeyEvent.VK_V);
+		createCaptions.addActionListener(new createVOListener());
+
+	      // create the exit menu items
 		exitItem = new JMenuItem("Exit");
 		exitItem.setMnemonic(KeyEvent.VK_X);
 		exitItem.addActionListener(new exitListener());
-		
-      
-      // create the update menu item
-      updateImport = new JMenuItem("Update Import");
-      updateImport.addActionListener(new ActionListener(){
-         public void actionPerformed(ActionEvent e)
-         {
-            updateScriptFile();
-         }
-      });
-      
-      settingsMenu = new JMenu("Settings");
-      settingsMenu.setMnemonic(KeyEvent.VK_S);
-      
-      filePathMenu = new JMenuItem("File Paths");
-      filePathMenu.addActionListener(new ActionListener(){
-         public void actionPerformed(ActionEvent e)
-         {
-            openSettingsMenu();         
-         }
-      });
-      settingsMenu.add(filePathMenu);
-      menuBar.add(settingsMenu);
-      
-      fileMenu.add(updateImport);
+
+
+		// create the update menu item
+		updateImport = new JMenuItem("Update Import");
+		updateImport.addActionListener(new ActionListener(){
+		public void actionPerformed(ActionEvent e)
+		{
+		    updateScriptFile();
+		}
+		});
+
+		settingsMenu = new JMenu("Settings");
+		settingsMenu.setMnemonic(KeyEvent.VK_S);
+
+		filePathMenu = new JMenuItem("File Paths");
+		filePathMenu.addActionListener(new ActionListener(){
+		   public void actionPerformed(ActionEvent e)
+		   {
+		      openSettingsMenu();         
+		   }
+		});
+		settingsMenu.add(filePathMenu);
+		menuBar.add(settingsMenu);
+
+		fileMenu.add(updateImport);
 		fileMenu.add(createDataFile);
-      fileMenu.add(createCaptions);
-      fileMenu.add(compileFiles);
+		fileMenu.add(createCaptions);
+		fileMenu.add(compileFiles);
 		fileMenu.add(exitItem);
 		setJMenuBar(menuBar);
-      //******************************************************* END MENU BAR
-      
-      //******************************************************* Load file paths and update GUI
-      loadSettings();
+		//******************************************************* END MENU BAR
+
+		//******************************************************* Load file paths and update GUI
+		loadSettings();
 		add(new UIPanel());
 		setVisible(true);
 		//*******************************************************
-      
-      
+
+
 		// Temporarily obtain the Frame's JPane to adjust border settings
 		JPanel tempPane = (JPanel)getContentPane();
 		//tempPane.setBorder(BorderFactory.createEmptyBorder(5,0,5,0));
-		
+
 		// UpdateText() is called whenever something can affect the text.  This initializes the text.
 		updateText();
-         
+
 		// Initializing variables
 		companies = new ArrayList<String>();
-		
+
 		source = null;
 		sourceLoc = null;
 	}
@@ -249,50 +247,48 @@ public class imageRenamer extends JFrame
 	}
 	
    
-   //----------------------------------------------------------------------BEGIN METHODS
+	//----------------------------------------------------------------------BEGIN METHODS
 		
-   public void createMarketsLists()
+	public void createMarketsLists()
 	{
 		File f = new File(defaultLogosPath);
       
-      marketsListsModel.clear();  
+		marketsListsModel.clear();  
         
-      if(f.exists())
-      {
-   		ArrayList<File> fileContents = new ArrayList<File>(Arrays.asList(f.listFiles()));
+	if(f.exists())
+	{
+		ArrayList<File> fileContents = new ArrayList<File>(Arrays.asList(f.listFiles()));
    		
-         for(int i = 0;i < fileContents.size();i++)
-   		{
-   			File marketFile = fileContents.get(i);
-   			
-            if(marketFile.isDirectory())
-   			{
-   				marketsListsModel.addElement(marketFile.getName());
-   			}
-   		}
-   		
-   		// create the listModel with a list of objects, and set selected index to 0 so there is no crashes on import
-   		
-         if(marketsLists == null)
-         {
-            JList marketsToAdd = new JList(marketsListsModel);
-            marketsToAdd.addListSelectionListener(new ListSelectionListener(){
-               public void valueChanged(ListSelectionEvent e)
-               {
-                  updateText();
-               }
-            }); 
-            marketsLists = marketsToAdd;
-            
-         }else{
-            marketsLists.setModel(marketsListsModel);
-         }
-         marketsLists.setSelectedIndex(0);
-      }else{
-         JOptionPane.showMessageDialog(new JFrame(),
-         "Directory " + f + " not found. Adjust file path settings");
-      }
+ 	for(int i = 0;i < fileContents.size();i++)
+	{
+		File marketFile = fileContents.get(i);		
+    		if(marketFile.isDirectory())
+		{
+			marketsListsModel.addElement(marketFile.getName());
+		}
 	}
+   		
+	// create the listModel with a list of objects, and set selected index to 0 so there is no crashes on import
+   		
+ 	if(marketsLists == null)
+ 	{
+		JList marketsToAdd = new JList(marketsListsModel);
+    		marketsToAdd.addListSelectionListener(new ListSelectionListener(){
+			public void valueChanged(ListSelectionEvent e)
+			{
+				updateText();
+			}
+		}); 
+		marketsLists = marketsToAdd;
+         }else{
+		marketsLists.setModel(marketsListsModel);
+         }
+		marketsLists.setSelectedIndex(0);
+      }else{
+		JOptionPane.showMessageDialog(new JFrame(),
+		"Directory " + f + " not found. Adjust file path settings");
+      }
+}
 	
    public void openSettingsMenu()
    {
@@ -308,13 +304,13 @@ public class imageRenamer extends JFrame
 		} catch (Exception e) {
 		    // If Nimbus is not available, you can set the GUI to another look and feel.
 		}
-      settingsWindow.setTitle("File Path Settings");
+		settingsWindow.setTitle("File Path Settings");
 		Toolkit toolkit =  Toolkit.getDefaultToolkit ();
  		Dimension dim = toolkit.getScreenSize();
 		WIDTH = dim.width / 2;
 		HEIGHT = dim.height / 2;
 		settingsWindow.setBounds(0, 0,WIDTH,HEIGHT);
-      WindowAdapter windowAdapter = new WindowAdapter()
+      		WindowAdapter windowAdapter = new WindowAdapter()
         {
             public void windowClosing(WindowEvent we)
             {
@@ -363,19 +359,19 @@ public class imageRenamer extends JFrame
       
    }
    
-   public void updateText()
+	public void updateText()
 	{
-      if(infoText != null)
-      {
-         infoText.setBody("<strong><p>Image Renaming Directory:</strong><br />" + defaultLogosPath +
-          marketsLists.getSelectedValue() + "\\</p>");
-         if(scriptFile != null)
-         {
-            infoText.append(scriptFile.getName());
-         }else{
-            infoText.append("No import");
-         }
-      }
+		if(infoText != null)
+		{
+			infoText.setBody("<strong><p>Image Renaming Directory:</strong><br />" + defaultLogosPath +
+			marketsLists.getSelectedValue() + "\\</p>");
+		 if(scriptFile != null)
+		 {
+		    infoText.append(scriptFile.getName());
+		 }else{
+		    infoText.append("No import");
+		 }
+	}
 	}
    
 	public dmcEditorPane getTextBox()
@@ -437,7 +433,7 @@ public class imageRenamer extends JFrame
 			
 			setDividerSize(5);
 			setUI(new BasicSplitPaneUI() {
-       	public BasicSplitPaneDivider createDefaultDivider() {
+       			public BasicSplitPaneDivider createDefaultDivider() {
 		        return new BasicSplitPaneDivider(this) {
 		            @Override
 		                public void paint(Graphics g) {
@@ -445,9 +441,9 @@ public class imageRenamer extends JFrame
 		                g.fillRect(0, 0, getSize().width, getSize().height);
 		                    super.paint(g);
 		                }
-		        };
-		        }
-		    });
+			    };
+		  	  }
+		        });
 			
 			//---------------------------------------------
 			c.fill = GridBagConstraints.VERTICAL;
@@ -485,10 +481,10 @@ public class imageRenamer extends JFrame
 
 			//---------------------------------------------
 			scriptCheck = new scriptChecker("Script to TXT");
-         scriptToTextButton = new backgroundJButton("Script to TXT");
+         		scriptToTextButton = new backgroundJButton("Script to TXT");
 			c.insets = new Insets(2,12,12,2);
 			scriptToTextButton.setBackground(dmcRed);
-         scriptToTextButton.addActionListener(new createTextListener());
+        		scriptToTextButton.addActionListener(new createTextListener());
          
 			c.gridx = 0;
 			c.gridy = 6;
@@ -506,26 +502,26 @@ public class imageRenamer extends JFrame
 
 			infoText = new dmcEditorPane();
 			infoText.setContentType("text/html");
-		   infoText.setEditable(false);
-		   infoText.addHyperlinkListener(new HyperlinkListener() {
-	           @Override
-	           public void hyperlinkUpdate(HyperlinkEvent hle) {
+		  	infoText.setEditable(false);
+		   	infoText.addHyperlinkListener(new HyperlinkListener() {
+			@Override
+			public void hyperlinkUpdate(HyperlinkEvent hle) {
 				  		System.out.println("Description: " + hle.getDescription() +
 												 "Event Type: " + hle.getEventType());
 	               if (HyperlinkEvent.EventType.ACTIVATED.equals(hle.getEventType())) {
 	                   System.out.println("LINK CLICKED" + hle.getURL());
 	                   Desktop desktop = Desktop.getDesktop();
 	                   try {
-							 	String url = hle.getDescription();
-							 	 String httpHeader = "";
-								 if(url.contains("http://") == false && url.contains("www.") == false)
-								 {
-								 	httpHeader = "http://";
-								 }
-                         String URIConversion = httpHeader + hle.getDescription();
-                         URIConversion = URIConversion.trim();
-							 	 URI website = new URI(URIConversion);
-	                      desktop.browse(website);
+				String url = hle.getDescription();
+				String httpHeader = "";
+				if(url.contains("http://") == false && url.contains("www.") == false)
+				{
+					httpHeader = "http://";
+				}
+                         	String URIConversion = httpHeader + hle.getDescription();
+                         	URIConversion = URIConversion.trim();
+				URI website = new URI(URIConversion);
+	                   	desktop.browse(website);
 	                   } catch (Exception ex) {
 	                       ex.printStackTrace();
 	                   }
@@ -537,7 +533,7 @@ public class imageRenamer extends JFrame
 			
 			importBut.addActionListener(new importListener());
 			begin.addActionListener(new beginListener());
-         scriptCheck.setTextBox(infoText);
+         		scriptCheck.setTextBox(infoText);
 			
 			//---------------------------------------------
 			c.gridx = 1;
@@ -619,8 +615,8 @@ public class imageRenamer extends JFrame
 			int returnVal = fc.showOpenDialog(imageRenamer.this);
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
                 
-                scriptFile = fc.getSelectedFile();
-                System.out.println("Opening: " + scriptFile.getName() + ".");
+                	scriptFile = fc.getSelectedFile();
+                	System.out.println("Opening: " + scriptFile.getName() + ".");
                
                 if(scriptFile.getName().endsWith(".doc") || scriptFile.getName().endsWith(".txt") )
                 {
@@ -652,7 +648,7 @@ public class imageRenamer extends JFrame
                      updateText();
                      importedScript = new scriptObject(document,infoText,scriptFile.getName());
                     
-      					importedScript.setStringFilePath(defaultExportDFPath);
+	             importedScript.setStringFilePath(defaultExportDFPath);
                      importedScript.setGraphicsPath(defaultExportGFXPath);
                      importedScript.setSlateTextPath(defaultSlateTextFilePath);
                      importedScript.setBackUpPath(backUpPath);
@@ -674,8 +670,8 @@ public class imageRenamer extends JFrame
          updateText();
          marketLogoPaths.clear();
          JFileChooser outPath = new JFileChooser(defaultImportPath);
-   		String textForScript = null;
-   		String spacer = "=================================================================\n";
+	 String textForScript = null;
+	 String spacer = "=================================================================\n";
          outPath.setDialogTitle("Select Directory to Compile");
    		outPath.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
    		int returnVal = outPath.showSaveDialog(new JFrame());
@@ -818,7 +814,7 @@ public class imageRenamer extends JFrame
             int returnVal = -50;
             JFileChooser outPath = new JFileChooser(defaultSlateTextFilePath);
       		outPath.setFileSelectionMode( JFileChooser.DIRECTORIES_ONLY);
-            outPath.setDialogTitle("Select Textfile Location for compilation:");
+            	outPath.setDialogTitle("Select Textfile Location for compilation:");
       		returnVal = outPath.showOpenDialog(new JFrame());
                
             for(int i = 0;i < importedScriptArray.size();i++)
@@ -854,8 +850,8 @@ public class imageRenamer extends JFrame
       		targetLocation = new File(defaultLogosPath + selectedMarket + "\\" + scriptFile.getName() + "\\");
       		System.out.println(targetLocation);
       		
-            updateText();	     
-            importedScript.renameImages(selectedMarket,defaultLogosPath);
+            	updateText();	     
+            	importedScript.renameImages(selectedMarket,defaultLogosPath);
          }else if(importedScriptArray.size() > 0){
          
             ArrayList<String> marketBuilder = new ArrayList<String>();
@@ -870,9 +866,9 @@ public class imageRenamer extends JFrame
                   JFileChooser outPath = new JFileChooser(defaultLogosPath);
                   outPath.setFileSelectionMode( JFileChooser.DIRECTORIES_ONLY);
                   outPath.setDialogTitle("Select Logo Location for " + importedScriptArray.get(i));
-            		returnVal = outPath.showSaveDialog(new JFrame());
+		  returnVal = outPath.showSaveDialog(new JFrame());
                
-            		if(returnVal == JFileChooser.APPROVE_OPTION){
+            	  if(returnVal == JFileChooser.APPROVE_OPTION){
                      String outString = outPath.getSelectedFile().getAbsolutePath();
                      String selectedMarket = outString.substring(outString.lastIndexOf("\\") + 1);
                      marketBuilder.add(selectedMarket);
@@ -914,7 +910,7 @@ public class imageRenamer extends JFrame
             importedScript.setSlateTextPath(defaultSlateTextFilePath);
             importedScript.setBackUpPath(backUpPath);
             importedScript.setSubLogoFolder(defaultSubLogoFolder);
-   			infoText.append("<p>Reimported : " + scriptFile.getName() + "</p>");
+	    infoText.append("<p>Reimported : " + scriptFile.getName() + "</p>");
           }catch(IOException f)
           {
           
@@ -924,9 +920,9 @@ public class imageRenamer extends JFrame
    		String textForScript = null;
    		String spacer = "=================================================================\n";
 			File directorySelected = new File(compilationDirectory);
-         compilationDirectory = directorySelected.getAbsolutePath();
+         		compilationDirectory = directorySelected.getAbsolutePath();
 			File[] allFiles = directorySelected.listFiles();
-         importedScriptArray.clear();
+        		importedScriptArray.clear();
 			for(int i = 0;i < allFiles.length;i++)
 			{
 				File f = allFiles[i];
@@ -948,7 +944,7 @@ public class imageRenamer extends JFrame
                      }
                      
                      scriptObject scriptToAdd = new scriptObject(document,infoText,f.getName());
-      					scriptToAdd.setStringFilePath(defaultExportDFPath);
+		     scriptToAdd.setStringFilePath(defaultExportDFPath);
                      scriptToAdd.setGraphicsPath(defaultExportGFXPath);
                      scriptToAdd.setSlateTextPath(defaultSlateTextFilePath);
                      scriptToAdd.setBackUpPath(backUpPath);
@@ -974,10 +970,10 @@ public class imageRenamer extends JFrame
    class filePathSettingsPane extends JPanel
    {
       private String importPath;
-	   private String exportDFPath;
-	   private String exportGFXPath;
-	   private String logosPath;
-	   private String panelBackUpPath;
+      private String exportDFPath;
+      private String exportGFXPath;
+      private String logosPath;
+      private String panelBackUpPath;
       private String subLogoFolder;
       private String slateTextFilePath;
       
@@ -994,7 +990,7 @@ public class imageRenamer extends JFrame
       filePathSettingsPane(JFrame parentFrame)
       {
          Toolkit toolkit =  Toolkit.getDefaultToolkit ();
- 		   Dimension dim = toolkit.getScreenSize();
+	 Dimension dim = toolkit.getScreenSize();
          
          JLabel label = new JLabel("IMPORT PATH: ");
          label.setFont(new Font("Helvetica", Font.BOLD, 14));
@@ -1018,23 +1014,23 @@ public class imageRenamer extends JFrame
          parent = parentFrame;
          
          setLayout(new GridBagLayout());
-			GridBagConstraints c = new GridBagConstraints();
-			
-			
-			//--------------------------------------------- Initial Settings for Gridbag layout
-			c.fill = GridBagConstraints.NONE;
-			c.anchor = GridBagConstraints.LINE_START;
+	 GridBagConstraints c = new GridBagConstraints();
+
+
+	 //--------------------------------------------- Initial Settings for Gridbag layout
+	 c.fill = GridBagConstraints.NONE;
+	 c.anchor = GridBagConstraints.LINE_START;
          c.insets = new Insets(20,20,20,20);  //top padding
          //---------------------------------------------
          
          //--------------------------------------------- First Line of GridBag
-			c.gridx = 0;
-			c.gridy = 0;
-			c.weightx = 0.1;
+	 c.gridx = 0;
+	 c.gridy = 0;
+	 c.weightx = 0.1;
          c.weighty = .5;
          c.gridwidth = 1;
          c.gridheight = 1;
-			add(label,c);
+	 add(label,c);
          
          c.gridx = 1;
          c.gridy = 0;
@@ -1057,8 +1053,8 @@ public class imageRenamer extends JFrame
          add(label,c);         
          //---------------------------------------------- Second Line of GridBag
          c.gridx = 0;
-			c.gridy = 2;
-			c.weightx = 0.1;
+	 c.gridy = 2;
+	 c.weightx = 0.1;
          c.weighty = 0.1;
          c.gridwidth = 1;
          c.gridheight = 1;
@@ -1089,8 +1085,8 @@ public class imageRenamer extends JFrame
          
          //---------------------------------------------- Third Line of GridBag
          c.gridx = 0;
-			c.gridy = 4;
-			c.weightx = 0.1;
+	 c.gridy = 4;
+	 c.weightx = 0.1;
          c.weighty = 0.1;
          c.gridwidth = 1;
          c.gridheight = 1;
@@ -1121,8 +1117,8 @@ public class imageRenamer extends JFrame
          
           //---------------------------------------------- Fourth Line of GridBag
          c.gridx = 0;
-			c.gridy = 6;
-			c.weightx = 0.1;
+	 c.gridy = 6;
+	 c.weightx = 0.1;
          c.weighty = 0.1;
          c.gridwidth = 1;
          c.gridheight = 1;
@@ -1186,8 +1182,8 @@ public class imageRenamer extends JFrame
          
          //---------------------------------------------- Sixth Line of GridBag
          c.gridx = 0;
-			c.gridy = 10;
-			c.weightx = 0.1;
+	 c.gridy = 10;
+	 c.weightx = 0.1;
          c.weighty = 0.1;
          c.gridwidth = 1;
          c.gridheight = 1;
@@ -1218,8 +1214,8 @@ public class imageRenamer extends JFrame
          
          //---------------------------------------------- Seventh Line of GridBag
          c.gridx = 0;
-			c.gridy = 12;
-			c.weightx = 0.1;
+	 c.gridy = 12;
+	 c.weightx = 0.1;
          c.weighty = 0.1;
          c.gridwidth = 1;
          c.gridheight = 1;
@@ -1344,10 +1340,10 @@ public class imageRenamer extends JFrame
 			super(sIn);
 			System.out.println(getFont().toString());
 			setFont(JButtonFont);
-      	setContentAreaFilled(false);
-      	setFocusPainted(false); // used for demonstration
-         Border border = BorderFactory.createBevelBorder(BevelBorder.LOWERED,dmcGray,dmcLightGray);
-         setBorder(border);
+      			setContentAreaFilled(false);
+      			setFocusPainted(false); // used for demonstration
+         		Border border = BorderFactory.createBevelBorder(BevelBorder.LOWERED,dmcGray,dmcLightGray);
+         		setBorder(border);
  	 	}
 
     	@Override
