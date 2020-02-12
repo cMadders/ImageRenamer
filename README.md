@@ -1,7 +1,7 @@
 # ImageRenamer
 
 # Summary
-This was the first program I ever wrote, outside of standard exercises.
+This was the first program I ever wrote, outside of standard exercises.  The tabbing didn't import well, so please, bear with me.
 
 It began as a simple production task performer to automate small portions of my job at the time.  Initially the program would separate relevant portions of text from documents and save them into individual .txt files.
 
